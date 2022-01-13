@@ -1,0 +1,8 @@
+version: '3.7'
+
+services:
+  mailpiece:
+    image: mailpiece-api:latest
+    restart: always
+    ports:
+      - 8080:8080

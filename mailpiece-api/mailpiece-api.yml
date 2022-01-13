@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mailpiece-api
+spec:
+  selector:
+      matchLabels:
+        app: mailpiece-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mailpiece-api
+    spec:
+      containers:
+        - name: mailpiece-api
+          image: mailpiece-api:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "8080"
+          ports:
+            - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mailpiece-api
+spec:
+  selector:
+    app: mailpiece-api
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      nodePort: 30000
